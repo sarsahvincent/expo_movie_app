@@ -11,17 +11,15 @@ import {
 } from "react-native";
 import React, { useState } from "react";
 import date from "date-and-time";
-import { Rating, AirbnbRating } from "react-native-ratings";
+import { AirbnbRating } from "react-native-ratings";
 import moment from "moment";
 import PlayButton from "../components/PlayButton";
+import VideoPlayer from "../components/VideoPlayer";
 const placeholderImage = require("../assets/images/movie_placeholder.jpeg");
 
 const height = Dimensions.get("screen").height;
 const DetailsScreen = ({ navigation, route }) => {
-  const pattern = date.compile("ddd, MMM DD YYYY");
   const item = route.params.item;
-  console.log("item", item);
-  console.log("title", item?.poster_path);
   const [modalVisible, setModalVisible] = useState(false);
   const videoShown = () => {
     setModalVisible(!modalVisible);
@@ -62,9 +60,12 @@ const DetailsScreen = ({ navigation, route }) => {
 
         <Modal visible={modalVisible} animationType="slide">
           <View style={styles.videoModal}>
-            <Pressable onPress={() => videoShown()} tyle={styles.buttton}>
-              <Text>modal</Text>
-            </Pressable>
+            <View style={{}}>
+              <Pressable onPress={() => videoShown()} tyle={styles.buttton}>
+                <Text>Close</Text>
+              </Pressable>
+            </View>
+            <VideoPlayer />
           </View>
         </Modal>
       </View>
@@ -107,5 +108,8 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
+  },
+  buttton: {
+    marginTop: 100,
   },
 });
