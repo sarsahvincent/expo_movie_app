@@ -7,6 +7,7 @@ import {
   ScrollView,
   SafeAreaView,
   Modal,
+  Pressable,
 } from "react-native";
 import React, { useState } from "react";
 import date from "date-and-time";
@@ -22,6 +23,9 @@ const DetailsScreen = ({ navigation, route }) => {
   console.log("item", item);
   console.log("title", item?.poster_path);
   const [modalVisible, setModalVisible] = useState(false);
+  const videoShown = () => {
+    setModalVisible(!modalVisible);
+  };
   return (
     <SafeAreaView>
       <View>
@@ -36,7 +40,7 @@ const DetailsScreen = ({ navigation, route }) => {
           />
           <View style={styles.container}>
             <View style={styles.playButton}>
-              <PlayButton />
+              <PlayButton handlePress={videoShown} />
             </View>
             <Text style={styles.movieTitle}>{item?.title}</Text>
             {item?.genres?.map((gen) => {
@@ -55,7 +59,14 @@ const DetailsScreen = ({ navigation, route }) => {
             </Text>
           </View>
         </ScrollView>
-        <Modal visible={modalVisible} animationType="slide"></Modal>
+
+        <Modal visible={modalVisible} animationType="slide">
+          <View style={styles.videoModal}>
+            <Pressable onPress={() => videoShown()} tyle={styles.buttton}>
+              <Text>modal</Text>
+            </Pressable>
+          </View>
+        </Modal>
       </View>
     </SafeAreaView>
   );
@@ -91,5 +102,10 @@ const styles = StyleSheet.create({
     position: "absolute",
     top: -25,
     right: 20,
+  },
+  videoModal: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
   },
 });
